@@ -105,6 +105,11 @@ class Resort:
             lstReso.delete(0,END)
             for row in backend.viewData():
                 lstReso.insert(END, row, str(""))
+
+        def search():
+                lstReso.delete(0,END)
+                for row in backend.searchData(CusID.get(),FirstName.get(), Lastname.get(), Contact.get(), CusAddress.get(), Room.get(), DateIn.get(), DateOut.get()):
+                        lstReso.insert(END,row,str(""))
         
         def records(root):
             global cd
@@ -221,7 +226,7 @@ class Resort:
         width=13, height=2, text='Delete', command= deleteRec).grid(row=0, column=3, padx =4,  pady=1)
 
         self.btnSearch = Button(BottomFrame, bd=4, font=('arial', 16,'bold'),
-        width=13, height=2, text='Search').grid(row=0, column=4, padx =4,  pady=1)
+        width=13, height=2, text='Search', command=search).grid(row=0, column=4, padx =4,  pady=1)
 
         self.btnReset = Button(BottomFrame, bd=4, font=('arial', 16,'bold'),
         width=13, height=2, text='Reset', command = Reset).grid(row=0, column=5, padx =4,  pady=1)

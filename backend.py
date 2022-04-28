@@ -38,7 +38,7 @@ def deleteData(CusNo):
 def searchData(CusNo="", CusFirstName="", CusLastName="", CusContact="", CusAddress="", CusRoom="", CusInDate="", CusOutDate=""):
     communication = sqlite3.connect("resort_client.db")
     cur = communication.cursor()
-    cur.execute("SELECT * FROM client_data WHERE CusFirstName=? OR CusLastName=? OR CusContact=? OR CusAddress=? OR CusRoom=? OR CusInDate? OR CusOutDate=?", (CusFirstName, CusLastName, CusContact, CusAddress, CusRoom, CusInDate, CusOutDate))
+    cur.execute("SELECT * FROM client_data WHERE CusNo=? OR CusFirstName=? OR CusLastName=? OR CusContact=? OR CusAddress=? OR CusRoom=? OR CusInDate=? OR CusOutDate=?", (CusNo, CusFirstName, CusLastName, CusContact, CusAddress, CusRoom, CusInDate, CusOutDate))
 
     rows = cur.fetchall()
     communication.close()
