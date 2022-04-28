@@ -15,7 +15,7 @@ import backend
 class Resort:
     def __init__(self,root):
         self.root = root 
-        self.root.title("InfoLog")
+        self.root.title("Baculin InfoLog")
         self.root.geometry("1350x470+0+0")
 
         MainFrame = Frame(root)
