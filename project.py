@@ -15,7 +15,7 @@ class Resort:
     def __init__(self,root):
         self.root = root 
         self.root.title("Hotel Database Management System")
-        self.root.geometry("1350x500+0+0")
+        self.root.geometry("1250x500+0+0")
 
         MainFrame = Frame(root)
         MainFrame.grid()
