@@ -10,26 +10,26 @@ def verification():
     passcode = password.get()
 
     if(user == "" and passcode == "") :
-        messagebox.showinfo("", "Blank Not allowed")
+        messagebox.showinfo("Baculin InfoLog", "Blank entries are prohibited.")
 
     elif(user == "admin" and passcode == "admin"):
 
-        messagebox.showinfo("","Login successful.")
+        messagebox.showinfo("Baculin InfoLog","Login successful.")
         os.system("project.py 1")
         root.destroy()
         
     else :
-        messagebox.showwarning("","Incorrect credentials, please try again.")
+        messagebox.showwarning("Baculin InfoLog","Incorrect credentials, please try again.")
 
 def exit():
-    exitfunction = tkinter.messagebox.askyesno("Login to InfoLog", "Are you sure you want to exit?")
+    exitfunction = tkinter.messagebox.askyesno("Login to Baculin InfoLog", "Are you sure you want to exit?")
     if exitfunction > 0:
         root.destroy()
         return
 
 
 root = Tk()
-root.title("Login to InfoLog")
+root.title("Login to Baculin InfoLog")
 root.geometry("350x150+0+0")
 
 username = StringVar()

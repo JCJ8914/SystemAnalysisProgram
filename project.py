@@ -152,17 +152,26 @@ class Resort:
             Outdate = datetime.strptime(OutDate, "%d/%m/%Y")
             NoOfDays.set((Outdate - Indate).days)
 
-        #     if  (Outdate - Indate).days > 0:
-        #              NoOfDays.set((Outdate - Indate).days)
+            if  (Outdate - Indate).days > 0:
 
-        #     elif (Outdate - Indate).days == 0:
-        #              lessthanday = tkinter.messagebox.askyesno("InfoLog", "Are you sure that the client will be staying for less than 24 hours?")
-        #              if lessthanday > 0:
-        #                      NoOfDays.set((Outdate - Indate).days)
+                     NoOfDays.set((Outdate - Indate).days)
+                     add()
 
-        #     else:
-        #             tkinter.messagebox.showwarning("InfoLog", "Negative amount of days staying is not allowed.")
-        #             return
+            elif (Outdate - Indate).days == 0:
+
+                     lessthanday = tkinter.messagebox.askyesno("Baculin InfoLog", "Are you sure that the client will be staying for less than 24 hours?")
+
+                     if lessthanday > 0:
+                             NoOfDays.set((Outdate - Indate).days)
+                             add()
+                     else:
+                             tkinter.messagebox.showinfo("Baculin InfoLog", "Record will not be added to the table.")
+                             return
+
+
+            elif (Outdate - Indate).days < 0:
+                    tkinter.messagebox.showwarning("Baculin InfoLog", "Negative amount of days staying is not allowed.")
+                    return
 
 # #=======================================LEFT WIDGETS==================================================
 
@@ -250,7 +259,7 @@ class Resort:
         self.btnExit = Button(BottomFrame, bd=4, font=('arial', 16,'bold'),
         width=13, height=2, text='Exit', command = iExit).grid(row=0, column=6, padx =4,  pady=1)                
                 
-
+        display()
 
 
 if __name__=='__main__':
