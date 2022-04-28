@@ -2,6 +2,7 @@ from cgitb import reset
 from email.mime import application
 from logging import root
 from tkinter import*
+from tkinter import ttk
 import tkinter.messagebox
 import time
 import datetime
@@ -76,10 +77,9 @@ class Resort:
                 self.txtSurname.delete(0,END)
                 self.txtContact.delete(0,END)
                 self.txtAddress.delete(0,END)
-                self.txtAddress.delete(0,END)
                 self.txtCheckin.delete(0,END)
                 self.txtCheckout.delete(0,END)
-                self.txtRoom.delete(0,END)
+                self.ddmRoom.delete(0,END)
 
                 DateIn.set(time.strftime("%d/%m/%Y"))
                 DateOut.set(time.strftime("%d/%m/%Y"))
@@ -135,8 +135,8 @@ class Resort:
             self.txtContact.insert(END,cd[3])
             self.txtAddress.delete(0,END)
             self.txtAddress.insert(END,cd[4])
-            self.txtRoom.delete(0,END)
-            self.txtRoom.insert(END,cd[5])
+            self.ddmRoom.delete(0,END)
+            self.ddmRoom.insert(END,cd[5])
             self.txtCheckin.delete(0,END)
             self.txtCheckin.insert(END,cd[6])
             self.txtCheckout.delete(0,END)
@@ -192,8 +192,10 @@ class Resort:
 
         self.lblRoom = Label(LeftFrame, font=('arial', 12,'bold'), text="Room No:", padx=1)
         self.lblRoom.grid(row=5, column=0, sticky =W)
-        self.txtRoom =Entry(LeftFrame, font=('arial',12,'bold') ,width =18, textvariable= Room)
-        self.txtRoom.grid(row=5, column=1, pady=3, padx=20)
+        self.ddmRoom = ttk.Combobox(LeftFrame, state='readonly', font=('arial', 12,'bold'), width=16, textvariable=Room)
+        self.ddmRoom ['value'] = ('', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10')
+        self.ddmRoom.current(0)
+        self.ddmRoom.grid(row=5, column=1, pady=3, padx=20)
 
         self.lblCheckin = Label(LeftFrame, font=('arial', 12,'bold'), text="Check In Date:", padx=1)
         self.lblCheckin.grid(row=6, column=0, sticky =W)
