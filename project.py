@@ -65,7 +65,7 @@ class Resort:
 #==================================Button Functions============================================================
         
         def iExit():
-            iExit = tkinter.messagebox.askyesno("Management System", "Confirm if you want to exit.")
+            iExit = tkinter.messagebox.askyesno("InfoLog", "Confirm if you want to exit.")
             if iExit > 0:
                 root.destroy()
                 return
