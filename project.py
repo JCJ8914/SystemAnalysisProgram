@@ -211,9 +211,6 @@ class Resort:
         self.btnDisplay = Button(BottomFrame, bd=4, font=('arial', 16,'bold'),
         width=13, height=2, text='Display', command= display).grid(row=0, column=1, padx =4,  pady=1)
 
-        self.btnUpdate = Button(BottomFrame, bd=4, font=('arial', 16,'bold'),
-        width=13, height=2, text='Update').grid(row=0, column=2, padx =4,  pady=1)
-
         self.btnDelete = Button(BottomFrame, bd=4, font=('arial', 16,'bold'),
         width=13, height=2, text='Delete', command= deleteRec).grid(row=0, column=3, padx =4,  pady=1)
 
