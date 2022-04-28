@@ -15,7 +15,7 @@ class Resort:
     def __init__(self,root):
         self.root = root 
         self.root.title("InfoLog")
-        self.root.geometry("1250x500+0+0")
+        self.root.geometry("1350x470+0+0")
 
         MainFrame = Frame(root)
         MainFrame.grid()
@@ -110,6 +110,15 @@ class Resort:
                 lstReso.delete(0,END)
                 for row in backend.searchData(CusID.get(),FirstName.get(), Lastname.get(), Contact.get(), CusAddress.get(), Room.get(), DateIn.get(), DateOut.get()):
                         lstReso.insert(END,row,str(""))
+        def update():
+
+                if(len(CusID.get()) != 0):
+                        backend.deleteData(cd[0])
+                if(len(CusID.get()) != 0):
+                        backend.addData(CusID.get(), FirstName.get(), Lastname.get(), Contact.get(), CusAddress.get(), Room.get(), DateIn.get(), DateOut.get())
+                        lstReso.delete(0, END)
+                        lstReso.insert(END, (CusID.get(), FirstName.get(), Lastname.get(), Contact.get(), CusAddress.get(), Room.get(), DateIn.get(), DateOut.get()))
+
         
         def records(root):
             global cd
@@ -222,6 +231,9 @@ class Resort:
 
         self.btnDisplay = Button(BottomFrame, bd=4, font=('arial', 16,'bold'),
         width=13, height=2, text='Display', command= display).grid(row=0, column=1, padx =4,  pady=1)
+
+        self.btnDisplay = Button(BottomFrame, bd=4, font=('arial', 16,'bold'),
+        width=13, height=2, text='Update', command= update).grid(row=0, column=2, padx =4,  pady=1)
 
         self.btnDelete = Button(BottomFrame, bd=4, font=('arial', 16,'bold'),
         width=13, height=2, text='Delete', command= deleteRec).grid(row=0, column=3, padx =4,  pady=1)
