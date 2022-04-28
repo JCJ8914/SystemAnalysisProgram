@@ -140,7 +140,20 @@ class Resort:
             OutDate = DateOut.get()
             Indate = datetime.strptime(InDate, "%d/%m/%Y")
             Outdate = datetime.strptime(OutDate, "%d/%m/%Y")
-            NoOfDays.set(abs((Outdate - Indate).days)) 
+            NoOfDays.set((Outdate - Indate).days)
+
+            if  (Outdate - Indate).days > 0:
+                     NoOfDays.set((Outdate - Indate).days)
+
+            elif (Outdate - Indate).days == 0:
+                     lessthanday = tkinter.messagebox.askyesno("InfoLog", "Are you sure that the client will be staying for less than 24 hours?")
+                     if lessthanday > 0:
+                             NoOfDays.set((Outdate - Indate).days)
+
+
+            else:
+                    tkinter.messagebox.showwarning("InfoLog", "Negative amount of days staying is not allowed.")
+                    backend.deleteData
 
 # #=======================================LEFT WIDGETS==================================================
 
