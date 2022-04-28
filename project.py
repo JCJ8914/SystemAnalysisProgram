@@ -79,7 +79,8 @@ class Resort:
                 self.txtAddress.delete(0,END)
                 self.txtCheckin.delete(0,END)
                 self.txtCheckout.delete(0,END)
-                self.ddmRoom.delete(0,END)
+                
+                self.ddmRoom.set("")
 
                 DateIn.set(time.strftime("%d/%m/%Y"))
                 DateOut.set(time.strftime("%d/%m/%Y"))
