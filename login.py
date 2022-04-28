@@ -5,7 +5,7 @@ import project
 
 root = Tk()
 root.title("Login to InfoLog")
-root.geometry("300x200+0+0")
+root.geometry("250x125+0+0")
 
 global username
 global passcode

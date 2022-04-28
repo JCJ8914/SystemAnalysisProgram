@@ -153,7 +153,7 @@ class Resort:
 
             else:
                     tkinter.messagebox.showwarning("InfoLog", "Negative amount of days staying is not allowed.")
-                    backend.deleteData
+                    return
 
 # #=======================================LEFT WIDGETS==================================================
 
