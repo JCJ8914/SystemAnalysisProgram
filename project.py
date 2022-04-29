@@ -146,7 +146,6 @@ class Resort:
             self.txtCheckout.insert(END,cd[7])
 
         def addData():
-            add()
 
             InDate = DateIn.get() 
             OutDate = DateOut.get()
