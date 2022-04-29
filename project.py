@@ -99,6 +99,7 @@ class Resort:
             if(len(CusID.get())!=0):
                 backend.deleteData(cd[0])
                 reset()
+                tkinter.messagebox.showinfo("Baculin InfoLog", "Record deleted successfully.")
                 display()              
 
         def display():
@@ -119,6 +120,7 @@ class Resort:
                         backend.addData(CusID.get(), FirstName.get(), Lastname.get(), Contact.get(), CusAddress.get(), Room.get(), DateIn.get(), DateOut.get())
                         lstReso.delete(0, END)
                         lstReso.insert(END, (CusID.get(), FirstName.get(), Lastname.get(), Contact.get(), CusAddress.get(), Room.get(), DateIn.get(), DateOut.get()))
+                        tkinter.messagebox.showinfo("Baculin InfoLog", "Record updated successfully.")
 
         
         def records(root):
@@ -154,6 +156,7 @@ class Resort:
 
             if  (Outdate - Indate).days > 0:
 
+                     tkinter.messagebox.showinfo("Baculin InfoLog", "Record added successfully.")
                      NoOfDays.set((Outdate - Indate).days)
                      add()
 
@@ -162,6 +165,7 @@ class Resort:
                      lessthanday = tkinter.messagebox.askyesno("Baculin InfoLog", "Are you sure that the client will be staying for less than 24 hours?")
 
                      if lessthanday > 0:
+                             tkinter.messagebox.showinfo("Baculin InfoLog", "Record added successfully.")
                              NoOfDays.set((Outdate - Indate).days)
                              add()
                      else:
