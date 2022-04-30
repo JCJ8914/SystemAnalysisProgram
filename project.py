@@ -176,6 +176,8 @@ class Resort:
             Outdate = datetime.strptime(OutDate, "%d/%m/%Y")
             NoOfDays.set((Outdate - Indate).days)
 
+            displayID = "Thank you for registering client data to the Baculin InfoLog. The client number is:" + str(CusID.get()) + ". Please provide the number to the client to serve as their identification number. \n\nData Details: \nClient Indentification Number:" + str(CusID.get()) + "\nClient First Name: "+ str(FirstName.get())+ "\nClient Last Name: "+ str(Lastname.get())+ "\nClient Contact:"+ str(Contact.get())+ "\nClient Address:"+ str(CusAddress.get())+ "\nClient Room:"+ str(Room.get())+ "\nCheck-in Date:"+ str(Indate)+ "\nCheck-out Date:"+ str(Outdate)
+
             #under construction here
         #     if (FirstName == FirstName, Lastname == Lastname, Room == Room):
         #                 messagebox.showerror("Error", "There is redundant data!")
@@ -198,7 +200,7 @@ class Resort:
                 #added one tab (to redo just remove one tab) --puebla
                 if  (Outdate - Indate).days > 0:
 
-                        tkinter.messagebox.showinfo("Baculin InfoLog", "Record added successfully.")
+                        tkinter.messagebox.showinfo("Baculin InfoLog", displayID)
                         NoOfDays.set((Outdate - Indate).days)
                         add()
 
@@ -207,7 +209,7 @@ class Resort:
                         lessthanday = tkinter.messagebox.askyesno("Baculin InfoLog", "Are you sure that the client will be staying for less than 24 hours?")
 
                         if lessthanday > 0:
-                                tkinter.messagebox.showinfo("Baculin InfoLog", "Record added successfully.")
+                                tkinter.messagebox.showinfo("Baculin InfoLog", displayID)
                                 NoOfDays.set((Outdate - Indate).days)
                                 add()
                         else:
