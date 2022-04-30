@@ -12,6 +12,7 @@ from numpy import pad
 import backend
 from tkinter import messagebox
 
+
 class Resort:
     def __init__(self,root):
         self.root = root 
@@ -88,7 +89,7 @@ class Resort:
                 rand = random.randint(1190, 8000)
                 randomReference = str(rand)
                 CusID.set(randomReference)
-
+        #added the Names and Room number on database
         def add():
             if(len(CusID.get()) != 0):
                 backend.addData(CusID.get(), FirstName.get(), Lastname.get(), Contact.get(), CusAddress.get(), Room.get(), DateIn.get(), DateOut.get())
@@ -145,6 +146,28 @@ class Resort:
             self.txtCheckout.delete(0,END)
             self.txtCheckout.insert(END,cd[7])
 
+        #algorithm to check input of the user
+        def checkData(first,last,room):#gets the data from the input
+                row=''
+                #gets the data from the input
+                #returns empty list or not
+                rows=backend.getDataFromDatabase(first,last,room)
+                if rows==[]:
+                        print("empty list")
+                        print(row)
+                        return False
+                elif rows!=[]:
+                        for row in rows:
+                                print('pota gumana')
+                                print(row)
+                                fName=row[0]
+                                lName=row[1]
+                                roomNo=row[2]
+                                print(fName,lName,roomNo)
+                                return True
+
+                
+
         def addData():
 
             InDate = DateIn.get() 
@@ -153,28 +176,48 @@ class Resort:
             Outdate = datetime.strptime(OutDate, "%d/%m/%Y")
             NoOfDays.set((Outdate - Indate).days)
 
-            if  (Outdate - Indate).days > 0:
-
-                     tkinter.messagebox.showinfo("Baculin InfoLog", "Record added successfully.")
-                     NoOfDays.set((Outdate - Indate).days)
-                     add()
-
-            elif (Outdate - Indate).days == 0:
-
-                     lessthanday = tkinter.messagebox.askyesno("Baculin InfoLog", "Are you sure that the client will be staying for less than 24 hours?")
-
-                     if lessthanday > 0:
-                             tkinter.messagebox.showinfo("Baculin InfoLog", "Record added successfully.")
-                             NoOfDays.set((Outdate - Indate).days)
-                             add()
-                     else:
-                             tkinter.messagebox.showinfo("Baculin InfoLog", "Record will not be added to the table.")
-                             return
+            #under construction here
+        #     if (FirstName == FirstName, Lastname == Lastname, Room == Room):
+        #                 messagebox.showerror("Error", "There is redundant data!")
+        #                 Reset()
+        #                 deleteRec()
+            #ends here
+            
+            #returns True or False if ther is a redudant data
+            checkIfRedudantData=checkData(FirstName.get(),Lastname.get(),Room.get())
 
 
-            elif (Outdate - Indate).days < 0:
-                    tkinter.messagebox.showwarning("Baculin InfoLog", "Negative amount of days staying is not allowed.")
-                    return
+            #if there is redudant data    
+            if checkIfRedudantData==True:
+                    messagebox.showerror("Error", "Redudant Data")
+                    Reset()
+                    return 
+                    
+            #if no redudant data from the checkData function, runs code below
+            elif checkIfRedudantData==False:
+                #added one tab (to redo just remove one tab) --puebla
+                if  (Outdate - Indate).days > 0:
+
+                        tkinter.messagebox.showinfo("Baculin InfoLog", "Record added successfully.")
+                        NoOfDays.set((Outdate - Indate).days)
+                        add()
+
+                elif (Outdate - Indate).days == 0:
+
+                        lessthanday = tkinter.messagebox.askyesno("Baculin InfoLog", "Are you sure that the client will be staying for less than 24 hours?")
+
+                        if lessthanday > 0:
+                                tkinter.messagebox.showinfo("Baculin InfoLog", "Record added successfully.")
+                                NoOfDays.set((Outdate - Indate).days)
+                                add()
+                        else:
+                                tkinter.messagebox.showinfo("Baculin InfoLog", "Record will not be added to the table.")
+                                return
+
+
+                elif (Outdate - Indate).days < 0:
+                        tkinter.messagebox.showwarning("Baculin InfoLog", "Negative amount of days staying is not allowed.")
+                        return
 
 # #=======================================LEFT WIDGETS==================================================
 
@@ -240,9 +283,10 @@ class Resort:
         self.txtDays.grid(row=0, column=1, pady=3, padx=20)
 
 #=======================================WIDGET BUTTONS==================================================
-
+        #change addData to checkData revise it later
         self.btnTotalandAddData = Button(BottomFrame, bd=4, font=('arial', 16,'bold'),
         width=13, height=2, text='Add', command=addData).grid(row=0, column=0, padx =4,  pady=1)
+        #<====0
 
         self.btnDisplay = Button(BottomFrame, bd=4, font=('arial', 16,'bold'),
         width=13, height=2, text='Display', command= display).grid(row=0, column=1, padx =4,  pady=1)

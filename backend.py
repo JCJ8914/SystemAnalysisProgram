@@ -53,4 +53,24 @@ def updateData(CusNo="", CusFirstName="", CusLastName="", CusContact="", CusAddr
     communication.commit()
     communication.close()
 
+#puebla was here
+#checks the User's Input and the Database
+def getDataFromDatabase(CusFirstName="", CusLastName="",CusRoom=""):
+    communication = sqlite3.connect("resort_client.db")
+    cur = communication.cursor()
+
+    cur.execute("SELECT CusFirstName,CusLastName,CusRoom FROM client_data WHERE CusFirstName=? AND CusLastName=?  AND CusRoom=? ", (CusFirstName, CusLastName, CusRoom))
+
+    rows = cur.fetchall()
+    communication.close()
+
+    #prints empty row
+    if rows==[]:
+        print("Empty Row")
+        return rows
+    #returns row if there is a tuple inside rows
+    elif rows!=[]:
+        print("Ready to Go")
+        return rows
+
 clientData()
