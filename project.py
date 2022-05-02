@@ -17,7 +17,7 @@ class Resort:
     def __init__(self,root):
         self.root = root 
         self.root.title("Baculin InfoLog")
-        self.root.geometry("1350x470+0+0")
+        self.root.geometry("1350x490+0+0")
 
         MainFrame = Frame(root)
         MainFrame.grid()
@@ -42,7 +42,7 @@ class Resort:
 
         BottomFrame = Frame(MainFrame, bd=10, width=1350, height=150, padx=2, relief=RIDGE)
         BottomFrame.pack(side=BOTTOM)
-
+        #
         global cd
         CusID = StringVar()
         FirstName = StringVar()
@@ -50,8 +50,10 @@ class Resort:
         Contact = StringVar()
         CusAddress = StringVar()
         Room = StringVar()
+        Status = StringVar() #Added Status
 
         NoOfDays = StringVar()
+        AvailableRoom = StringVar()
 
         DateIn = StringVar()
         DateOut = StringVar()
@@ -92,9 +94,9 @@ class Resort:
         #added the Names and Room number on database
         def add():
             if(len(CusID.get()) != 0):
-                backend.addData(CusID.get(), FirstName.get(), Lastname.get(), Contact.get(), CusAddress.get(), Room.get(), DateIn.get(), DateOut.get())
+                backend.addData(CusID.get(), FirstName.get(), Lastname.get(), Contact.get(), CusAddress.get(), Room.get(), DateIn.get(), DateOut.get(), Status.get())
                 lstReso.delete(0,END)
-                lstReso.insert(END, (CusID.get(), FirstName.get(), Lastname.get(), Contact.get(), CusAddress.get(), Room.get(), DateIn.get(), DateOut.get()))
+                lstReso.insert(END, (CusID.get(), FirstName.get(), Lastname.get(), Contact.get(), CusAddress.get(), Room.get(), DateIn.get(), DateOut.get(), Status.get()))
 
         def deleteRec():
             if(len(CusID.get())!=0):
@@ -118,9 +120,9 @@ class Resort:
                 if(len(CusID.get()) != 0):
                         backend.deleteData(cd[0])
                 if(len(CusID.get()) != 0):
-                        backend.addData(CusID.get(), FirstName.get(), Lastname.get(), Contact.get(), CusAddress.get(), Room.get(), DateIn.get(), DateOut.get())
+                        backend.addData(CusID.get(), FirstName.get(), Lastname.get(), Contact.get(), CusAddress.get(), Room.get(), DateIn.get(), DateOut.get(), Status.get())
                         lstReso.delete(0, END)
-                        lstReso.insert(END, (CusID.get(), FirstName.get(), Lastname.get(), Contact.get(), CusAddress.get(), Room.get(), DateIn.get(), DateOut.get()))
+                        lstReso.insert(END, (CusID.get(), FirstName.get(), Lastname.get(), Contact.get(), CusAddress.get(), Room.get(), DateIn.get(), DateOut.get(), Status.get()))
                         tkinter.messagebox.showinfo("Baculin InfoLog", "Record updated successfully.")
 
         
@@ -147,79 +149,157 @@ class Resort:
             self.txtCheckout.insert(END,cd[7])
 
         #algorithm to check input of the user
-        def checkData(first,last,room):#gets the data from the input
+        def checkData(CusID, FirstName, Lastname, Contact, CusAddress, Room, DateIn, DateOut, Status):#gets the data from the input
                 row=''
                 #gets the data from the input
                 #returns empty list or not
-                rows=backend.getDataFromDatabase(first,last,room)
-                if rows==[]:
+                rows=backend.getDataFromDatabase(CusID, FirstName, Lastname, Contact, CusAddress, Room, DateIn, DateOut, Status)
+
+                #added here
+                if rows =='RedudantCustomerNo':
+                        messagebox.showerror("Error", "Redundant Customer No.")
+                        Reset()
+                        return True
+                elif rows =='RoomTaken':
+                        messagebox.showerror("Error", "Room Already Taken. Please Try Again")
+                        Reset()
+                        return True
+                #if same name but different CustomerID, not allowed
+                #CustomerName can renew his/her cusID if he/she already check-out then check-in again in other date
+                # elif rows == 'CustomerNameAlreadyExists':
+                #         messagebox.showerror("Error", "Customer Name already exists. Please try again")
+                #         Reset()
+                #         return True
+                
+                elif rows==[]:
                         print("empty list")
                         print(row)
                         return False
-                elif rows!=[]:
-                        for row in rows:
-                                print('pota gumana')
-                                print(row)
-                                fName=row[0]
-                                lName=row[1]
-                                roomNo=row[2]
-                                print(fName,lName,roomNo)
-                                return True
+                else:
+                        print("Walang nangyari sadlyf")
+                        return True
+                #-----
+
+                # if rows==[]:
+                #         print("empty list")
+                #         print(row)
+                #         return False
+                # elif rows!=[]:
+                #         for row in rows:
+                #                 print('works')
+                #                 print(row)
+                #                 fName=row[0]
+                #                 lName=row[1]
+                #                 roomNo=row[2]
+                #                 print(fName,lName,roomNo)
+                #                 return True
 
                 
 
         def addData():
 
-            InDate = DateIn.get() 
-            OutDate = DateOut.get()
-            Indate = datetime.strptime(InDate, "%d/%m/%Y")
-            Outdate = datetime.strptime(OutDate, "%d/%m/%Y")
-            NoOfDays.set((Outdate - Indate).days)
+                InDate = DateIn.get() 
+                OutDate = DateOut.get()
+                Indate = datetime.strptime(InDate, "%d/%m/%Y")
+                Outdate = datetime.strptime(OutDate, "%d/%m/%Y")
+                NoOfDays.set((Outdate - Indate).days)
 
-            displayID = "Thank you for registering client data to the Baculin InfoLog. The client number is:" + str(CusID.get()) + ". Please provide the number to the client to serve as their identification number. \n\nData Details: \nClient Indentification Number:" + str(CusID.get()) + "\nClient First Name: "+ str(FirstName.get())+ "\nClient Last Name: "+ str(Lastname.get())+ "\nClient Contact:"+ str(Contact.get())+ "\nClient Address:"+ str(CusAddress.get())+ "\nClient Room:"+ str(Room.get())+ "\nCheck-in Date:"+ str(Indate)+ "\nCheck-out Date:"+ str(Outdate)
+                displayID = "Thank you for registering client data to the Baculin InfoLog. The client number is:" + str(CusID.get()) + ". Please provide the number to the client to serve as their identification number. \n\nData Details: \nClient Indentification Number:" + str(CusID.get()) + "\nClient First Name: "+ str(FirstName.get())+ "\nClient Last Name: "+ str(Lastname.get())+ "\nClient Contact:"+ str(Contact.get())+ "\nClient Address:"+ str(CusAddress.get())+ "\nClient Room:"+ str(Room.get())+ "\nCheck-in Date:"+ str(Indate)+ "\nCheck-out Date:"+ str(Outdate)
 
-            #under construction here
+                #returns True or False if ther is a redudant data
+                checkIfRedudantData=checkData(CusID.get(), FirstName.get(), Lastname.get(), Contact.get(), CusAddress.get(), Room.get(), InDate,OutDate, Status.get())
+
+
+
+                #if there is redudant data    
+                if checkIfRedudantData==True:
+                        # messagebox.showerror("Error", "Redudant Data")
+                        print('Try Agai')
+                        # Reset()
+                        return 
+                        
+                # if no redudant data from the checkData function, runs code below
+                elif checkIfRedudantData==False:
+                # added one tab (to redo just remove one tab) --puebla
+
+                        if  (Outdate - Indate).days > 0:
+
+                                tkinter.messagebox.showinfo("Baculin InfoLog", displayID)
+                                NoOfDays.set((Outdate - Indate).days)
+                                add()
+
+                        elif (Outdate - Indate).days == 0:
+
+                                lessthanday = tkinter.messagebox.askyesno("Baculin InfoLog", "Are you sure that the client will be staying for less than 24 hours?")
+
+                                if lessthanday > 0:
+                                        tkinter.messagebox.showinfo("Baculin InfoLog", displayID)
+                                        NoOfDays.set((Outdate - Indate).days)
+                                        add()
+                                else:
+                                        tkinter.messagebox.showinfo("Baculin InfoLog", "Record will not be added to the table.")
+                                        return
+
+
+                        elif (Outdate - Indate).days < 0:
+                                tkinter.messagebox.showwarning("Baculin InfoLog", "Negative amount of days staying is not allowed.")
+                                return
+
+
+        #     InDate = DateIn.get() 
+        #     OutDate = DateOut.get()
+        #     Indate = datetime.strptime(InDate, "%d/%m/%Y")
+        #     Outdate = datetime.strptime(OutDate, "%d/%m/%Y")
+        #     NoOfDays.set((Outdate - Indate).days)
+            
+
+            
+
+        #     displayID = "Thank you for registering client data to the Baculin InfoLog. The client number is:" + str(CusID.get()) + ". Please provide the number to the client to serve as their identification number. \n\nData Details: \nClient Indentification Number:" + str(CusID.get()) + "\nClient First Name: "+ str(FirstName.get())+ "\nClient Last Name: "+ str(Lastname.get())+ "\nClient Contact:"+ str(Contact.get())+ "\nClient Address:"+ str(CusAddress.get())+ "\nClient Room:"+ str(Room.get())+ "\nCheck-in Date:"+ str(Indate)+ "\nCheck-out Date:"+ str(Outdate)
+
+        #     under construction here
         #     if (FirstName == FirstName, Lastname == Lastname, Room == Room):
         #                 messagebox.showerror("Error", "There is redundant data!")
         #                 Reset()
         #                 deleteRec()
-            #ends here
+        #     ends here
             
-            #returns True or False if ther is a redudant data
-            checkIfRedudantData=checkData(FirstName.get(),Lastname.get(),Room.get())
+        #     #returns True or False if ther is a redudant data
+        #     checkIfRedudantData=checkData(CusID.get(),FirstName.get(),Lastname.get(),Contact.get(),Room.get())
 
 
-            #if there is redudant data    
-            if checkIfRedudantData==True:
-                    messagebox.showerror("Error", "Redudant Data")
-                    Reset()
-                    return 
+        #     #if there is redudant data    
+        #     if checkIfRedudantData==True:
+        #             messagebox.showerror("Error", "Redudant Data")
+        #             Reset()
+        #             return 
                     
-            #if no redudant data from the checkData function, runs code below
-            elif checkIfRedudantData==False:
-                #added one tab (to redo just remove one tab) --puebla
-                if  (Outdate - Indate).days > 0:
+        #     #if no redudant data from the checkData function, runs code below
+        #     elif checkIfRedudantData==False:
+        #         # added one tab (to redo just remove one tab) --puebla
 
-                        tkinter.messagebox.showinfo("Baculin InfoLog", displayID)
-                        NoOfDays.set((Outdate - Indate).days)
-                        add()
+        # if  (Outdate - Indate).days > 0:
 
-                elif (Outdate - Indate).days == 0:
+        #         tkinter.messagebox.showinfo("Baculin InfoLog", displayID)
+        #         NoOfDays.set((Outdate - Indate).days)
+        #         add()
 
-                        lessthanday = tkinter.messagebox.askyesno("Baculin InfoLog", "Are you sure that the client will be staying for less than 24 hours?")
+        # elif (Outdate - Indate).days == 0:
 
-                        if lessthanday > 0:
-                                tkinter.messagebox.showinfo("Baculin InfoLog", displayID)
-                                NoOfDays.set((Outdate - Indate).days)
-                                add()
-                        else:
-                                tkinter.messagebox.showinfo("Baculin InfoLog", "Record will not be added to the table.")
-                                return
+        #         lessthanday = tkinter.messagebox.askyesno("Baculin InfoLog", "Are you sure that the client will be staying for less than 24 hours?")
+
+        #         if lessthanday > 0:
+        #                 tkinter.messagebox.showinfo("Baculin InfoLog", displayID)
+        #                 NoOfDays.set((Outdate - Indate).days)
+        #                 add()
+        #         else:
+        #                 tkinter.messagebox.showinfo("Baculin InfoLog", "Record will not be added to the table.")
+        #                 return
 
 
-                elif (Outdate - Indate).days < 0:
-                        tkinter.messagebox.showwarning("Baculin InfoLog", "Negative amount of days staying is not allowed.")
-                        return
+        # elif (Outdate - Indate).days < 0:
+        #         tkinter.messagebox.showwarning("Baculin InfoLog", "Negative amount of days staying is not allowed.")
+        #         return
 
 # #=======================================LEFT WIDGETS==================================================
 
@@ -264,10 +344,16 @@ class Resort:
         self.lblCheckout.grid(row=7, column=0, sticky =W)
         self.txtCheckout =Entry(LeftFrame, font=('arial',12,'bold') ,width =18, textvariable= DateOut)
         self.txtCheckout.grid(row=7, column=1, pady=3, padx=20)
-
+        
+        self.lblStatus = Label(LeftFrame, font=('arial', 12,'bold'), text="Status:", padx=1) #Added Status
+        self.lblStatus.grid(row=8, column=0, sticky =W)
+        self.ddmStatus = ttk.Combobox(LeftFrame, state='readonly', font=('arial', 12,'bold'), width=16, textvariable=Status)
+        self.ddmStatus ['value'] = ('Check-in', 'Check-Out')
+        self.ddmStatus.current(0)
+        self.ddmStatus.grid(row=8, column=1, pady=3, padx=20)
 #=======================================RIGHT WIDGETS==================================================
         
-        self.lblLabel = Label(RightFrame1, font=('arial', 9,'bold'), padx=6, pady=10, text="Customer No\tFirstname\t Surname \t Contact No \t Address \t Room Num \tCheck In Date\t Check Out Date")
+        self.lblLabel = Label(RightFrame1, font=('arial', 9,'bold'), padx=6, pady=10, text="Customer No\tFirstname\t Surname \t Contact No \t Address \t Room Num \tCheck In Date \t Check Out Date \tStatus")
         self.lblLabel.grid(row=0, column=0, columnspan=17)
 
         scrollbar= Scrollbar(RightFrame2)
@@ -283,6 +369,11 @@ class Resort:
         self.lblDays.grid(row=0, column=0, sticky =W)
         self.txtDays =Entry(RightFrame3, font=('arial',12,'bold') ,width =76, textvariable= NoOfDays)
         self.txtDays.grid(row=0, column=1, pady=3, padx=20)
+
+        self.lblAvRoom = Label(RightFrame3, font=('arial', 12,'bold'), text="Rooms Available:", padx=2, pady=2)
+        self.lblAvRoom.grid(row=1, column=0, sticky =W)
+        self.txtAvRoom =Entry(RightFrame3, font=('arial',12,'bold') ,width =76, textvariable= AvailableRoom)
+        self.txtAvRoom.grid(row=1, column=1, pady=3, padx=20)
 
 #=======================================WIDGET BUTTONS==================================================
         #change addData to checkData revise it later
