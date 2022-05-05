@@ -19,8 +19,8 @@ class Resort:
         self.root.title("Baculin InfoLog")
         self.root.geometry("1350x490+0+0")
 
-        self.root.style = ttkthemes.ThemedStyle()
-        self.root.style.set_theme("arc")
+        # self.root.style = ttkthemes.ThemedStyle()
+        # self.root.style.set_theme("arc")
 
         MainFrame = Frame(root)
         MainFrame.grid()
@@ -306,54 +306,57 @@ class Resort:
 
 # #=======================================LEFT WIDGETS==================================================
 
-        self.lblCusID = Label(LeftFrame, font=('arial', 12,'bold'), text="Customer No:", padx=1)
+        self.lblCusID = Label(LeftFrame, font=('arial', 18,'bold'), text="Baculin InfoLog", padx=1)
         self.lblCusID.grid(row=0, column=0, sticky =W)
+
+        self.lblCusID = Label(LeftFrame, font=('arial', 12,'bold'), text="Customer No:", padx=1)
+        self.lblCusID.grid(row=2, column=0, sticky =W)
         self.txtCusID =Entry(LeftFrame, font=('arial',12,'bold') ,width =18, textvariable=CusID)
-        self.txtCusID.grid(row=0, column=1, pady=3, padx=20)
+        self.txtCusID.grid(row=2, column=1, pady=3, padx=20)
 
         self.lblFirstname = Label(LeftFrame, font=('arial', 12,'bold'), text="First Name:", padx=1)
-        self.lblFirstname.grid(row=1, column=0, sticky =W)
+        self.lblFirstname.grid(row=3, column=0, sticky =W)
         self.txtFirstname =Entry(LeftFrame, font=('arial',12,'bold') ,width =18, textvariable= FirstName)
-        self.txtFirstname.grid(row=1, column=1, pady=3, padx=20)
+        self.txtFirstname.grid(row=3, column=1, pady=3, padx=20)
 
         self.lblSurname = Label(LeftFrame, font=('arial', 12,'bold'), text="Surname:", padx=1)
-        self.lblSurname.grid(row=2, column=0, sticky =W)
+        self.lblSurname.grid(row=4, column=0, sticky =W)
         self.txtSurname =Entry(LeftFrame, font=('arial',12,'bold') ,width =18, textvariable= Lastname)
-        self.txtSurname.grid(row=2, column=1, pady=3, padx=20)
+        self.txtSurname.grid(row=4, column=1, pady=3, padx=20)
 
         self.lblContact = Label(LeftFrame, font=('arial', 12,'bold'), text="Contact No:", padx=1)
-        self.lblContact.grid(row=3, column=0, sticky =W)
+        self.lblContact.grid(row=5, column=0, sticky =W)
         self.txtContact =Entry(LeftFrame, font=('arial',12,'bold') ,width =18, textvariable= Contact)
-        self.txtContact.grid(row=3, column=1, pady=3, padx=20)
+        self.txtContact.grid(row=5, column=1, pady=3, padx=20)
 
         self.lblAddress = Label(LeftFrame, font=('arial', 12,'bold'), text="Address:", padx=1)
-        self.lblAddress.grid(row=4, column=0, sticky =W)
+        self.lblAddress.grid(row=6, column=0, sticky =W)
         self.txtAddress =Entry(LeftFrame, font=('arial',12,'bold') ,width =18, textvariable= CusAddress)
-        self.txtAddress.grid(row=4, column=1, pady=3, padx=20)
+        self.txtAddress.grid(row=6, column=1, pady=3, padx=20)
 
         self.lblRoom = Label(LeftFrame, font=('arial', 12,'bold'), text="Room No:", padx=1)
-        self.lblRoom.grid(row=5, column=0, sticky =W)
+        self.lblRoom.grid(row=7, column=0, sticky =W)
         self.ddmRoom = ttk.Combobox(LeftFrame, state='readonly', font=('arial', 12,'bold'), width=16, textvariable=Room)
         self.ddmRoom ['value'] = ('', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10')
         self.ddmRoom.current(0)
-        self.ddmRoom.grid(row=5, column=1, pady=3, padx=20)
+        self.ddmRoom.grid(row=7, column=1, pady=3, padx=20)
 
         self.lblCheckin = Label(LeftFrame, font=('arial', 12,'bold'), text="Check In Date:", padx=1)
-        self.lblCheckin.grid(row=6, column=0, sticky =W)
+        self.lblCheckin.grid(row=8, column=0, sticky =W)
         self.txtCheckin =Entry(LeftFrame, font=('arial',12,'bold') ,width =18, textvariable= DateIn)
-        self.txtCheckin.grid(row=6, column=1, pady=3, padx=20)
+        self.txtCheckin.grid(row=8, column=1, pady=3, padx=20)
 
         self.lblCheckout = Label(LeftFrame, font=('arial', 12,'bold'), text="Check Out Date:", padx=1)
-        self.lblCheckout.grid(row=7, column=0, sticky =W)
+        self.lblCheckout.grid(row=9, column=0, sticky =W)
         self.txtCheckout =Entry(LeftFrame, font=('arial',12,'bold') ,width =18, textvariable= DateOut)
-        self.txtCheckout.grid(row=7, column=1, pady=3, padx=20)
+        self.txtCheckout.grid(row=9, column=1, pady=3, padx=20)
         
         self.lblStatus = Label(LeftFrame, font=('arial', 12,'bold'), text="Status:", padx=1) #Added Status
-        self.lblStatus.grid(row=8, column=0, sticky =W)
+        self.lblStatus.grid(row=10, column=0, sticky =W)
         self.ddmStatus = ttk.Combobox(LeftFrame, state='readonly', font=('arial', 12,'bold'), width=16, textvariable=Status)
         self.ddmStatus ['value'] = ('Check-in', 'Check-Out')
         self.ddmStatus.current(0)
-        self.ddmStatus.grid(row=8, column=1, pady=3, padx=20)
+        self.ddmStatus.grid(row=10, column=1, pady=3, padx=20)
 #=======================================RIGHT WIDGETS==================================================
         
         self.lblLabel = Label(RightFrame1, font=('arial', 9,'bold'), padx=6, pady=10, text="Customer No\tFirstname\t Surname \t Contact No \t Address \t Room Num \tCheck In Date \t Check Out Date \tStatus")
@@ -373,10 +376,10 @@ class Resort:
         self.txtDays =Entry(RightFrame3, font=('arial',12,'bold') ,width =76, textvariable= NoOfDays)
         self.txtDays.grid(row=0, column=1, pady=3, padx=20)
 
-        self.lblAvRoom = Label(RightFrame3, font=('arial', 12,'bold'), text="Rooms Available:", padx=2, pady=2)
-        self.lblAvRoom.grid(row=1, column=0, sticky =W)
-        self.txtAvRoom =Entry(RightFrame3, font=('arial',12,'bold') ,width =76, textvariable= AvailableRoom)
-        self.txtAvRoom.grid(row=1, column=1, pady=3, padx=20)
+        # self.lblAvRoom = Label(RightFrame3, font=('arial', 12,'bold'), text="Rooms Available:", padx=2, pady=2)
+        # self.lblAvRoom.grid(row=1, column=0, sticky =W)
+        # self.txtAvRoom =Entry(RightFrame3, font=('arial',12,'bold') ,width =76, textvariable= AvailableRoom)
+        # self.txtAvRoom.grid(row=1, column=1, pady=3, padx=20)
 
 #=======================================WIDGET BUTTONS==================================================
         #change addData to checkData revise it later

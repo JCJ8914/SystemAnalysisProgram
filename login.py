@@ -39,9 +39,6 @@ def exit():
         root.destroy()
         return
 
-root.style = ThemedStyle()
-root.style.set_theme("arc")
-
 username = StringVar()
 password = StringVar()
 
