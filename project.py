@@ -19,9 +19,6 @@ class Resort:
         self.root.title("Baculin InfoLog")
         self.root.geometry("1350x490+0+0")
 
-        # self.root.style = ttkthemes.ThemedStyle()
-        # self.root.style.set_theme("arc")
-
         MainFrame = Frame(root)
         MainFrame.grid()
 
@@ -53,7 +50,7 @@ class Resort:
         Contact = StringVar()
         CusAddress = StringVar()
         Room = StringVar()
-        Status = StringVar() #Added Status
+        Status = StringVar() 
 
         NoOfDays = StringVar()
         AvailableRoom = StringVar()
@@ -69,7 +66,7 @@ class Resort:
         randomReference = str(rand)
         CusID.set(randomReference)
 
-#==================================Button Functions============================================================
+
         
         def iExit():
             iExit = tkinter.messagebox.askyesno("InfoLog", "Confirm if you want to exit.")
@@ -94,7 +91,7 @@ class Resort:
                 rand = random.randint(1190, 8000)
                 randomReference = str(rand)
                 CusID.set(randomReference)
-        #added the Names and Room number on database
+        
         def add():
             if(len(CusID.get()) != 0):
                 backend.addData(CusID.get(), FirstName.get(), Lastname.get(), Contact.get(), CusAddress.get(), Room.get(), DateIn.get(), DateOut.get(), Status.get())
@@ -158,7 +155,7 @@ class Resort:
                 #returns empty list or not
                 rows=backend.getDataFromDatabase(CusID, FirstName, Lastname, Contact, CusAddress, Room, DateIn, DateOut, Status)
 
-                #added here
+                
                 if rows =='RedudantCustomerNo':
                         messagebox.showerror("Error", "Redundant Customer No.")
                         Reset()
@@ -167,12 +164,7 @@ class Resort:
                         messagebox.showerror("Error", "Room Already Taken. Please Try Again")
                         Reset()
                         return True
-                #if same name but different CustomerID, not allowed
-                #CustomerName can renew his/her cusID if he/she already check-out then check-in again in other date
-                # elif rows == 'CustomerNameAlreadyExists':
-                #         messagebox.showerror("Error", "Customer Name already exists. Please try again")
-                #         Reset()
-                #         return True
+                
                 
                 elif rows==[]:
                         print("empty list")
@@ -181,21 +173,6 @@ class Resort:
                 else:
                         print("Walang nangyari sadlyf")
                         return True
-                #-----
-
-                # if rows==[]:
-                #         print("empty list")
-                #         print(row)
-                #         return False
-                # elif rows!=[]:
-                #         for row in rows:
-                #                 print('works')
-                #                 print(row)
-                #                 fName=row[0]
-                #                 lName=row[1]
-                #                 roomNo=row[2]
-                #                 print(fName,lName,roomNo)
-                #                 return True
 
                 
 
@@ -249,62 +226,6 @@ class Resort:
                                 return
 
 
-        #     InDate = DateIn.get() 
-        #     OutDate = DateOut.get()
-        #     Indate = datetime.strptime(InDate, "%d/%m/%Y")
-        #     Outdate = datetime.strptime(OutDate, "%d/%m/%Y")
-        #     NoOfDays.set((Outdate - Indate).days)
-            
-
-            
-
-        #     displayID = "Thank you for registering client data to the Baculin InfoLog. The client number is:" + str(CusID.get()) + ". Please provide the number to the client to serve as their identification number. \n\nData Details: \nClient Indentification Number:" + str(CusID.get()) + "\nClient First Name: "+ str(FirstName.get())+ "\nClient Last Name: "+ str(Lastname.get())+ "\nClient Contact:"+ str(Contact.get())+ "\nClient Address:"+ str(CusAddress.get())+ "\nClient Room:"+ str(Room.get())+ "\nCheck-in Date:"+ str(Indate)+ "\nCheck-out Date:"+ str(Outdate)
-
-        #     under construction here
-        #     if (FirstName == FirstName, Lastname == Lastname, Room == Room):
-        #                 messagebox.showerror("Error", "There is redundant data!")
-        #                 Reset()
-        #                 deleteRec()
-        #     ends here
-            
-        #     #returns True or False if ther is a redudant data
-        #     checkIfRedudantData=checkData(CusID.get(),FirstName.get(),Lastname.get(),Contact.get(),Room.get())
-
-
-        #     #if there is redudant data    
-        #     if checkIfRedudantData==True:
-        #             messagebox.showerror("Error", "Redudant Data")
-        #             Reset()
-        #             return 
-                    
-        #     #if no redudant data from the checkData function, runs code below
-        #     elif checkIfRedudantData==False:
-        #         # added one tab (to redo just remove one tab) --puebla
-
-        # if  (Outdate - Indate).days > 0:
-
-        #         tkinter.messagebox.showinfo("Baculin InfoLog", displayID)
-        #         NoOfDays.set((Outdate - Indate).days)
-        #         add()
-
-        # elif (Outdate - Indate).days == 0:
-
-        #         lessthanday = tkinter.messagebox.askyesno("Baculin InfoLog", "Are you sure that the client will be staying for less than 24 hours?")
-
-        #         if lessthanday > 0:
-        #                 tkinter.messagebox.showinfo("Baculin InfoLog", displayID)
-        #                 NoOfDays.set((Outdate - Indate).days)
-        #                 add()
-        #         else:
-        #                 tkinter.messagebox.showinfo("Baculin InfoLog", "Record will not be added to the table.")
-        #                 return
-
-
-        # elif (Outdate - Indate).days < 0:
-        #         tkinter.messagebox.showwarning("Baculin InfoLog", "Negative amount of days staying is not allowed.")
-        #         return
-
-# #=======================================LEFT WIDGETS==================================================
 
         self.lblCusID = Label(LeftFrame, font=('arial', 18,'bold'), text="Baculin InfoLog", padx=1)
         self.lblCusID.grid(row=0, column=0, sticky =W)
@@ -357,7 +278,7 @@ class Resort:
         self.ddmStatus ['value'] = ('Check-in', 'Check-Out')
         self.ddmStatus.current(0)
         self.ddmStatus.grid(row=10, column=1, pady=3, padx=20)
-#=======================================RIGHT WIDGETS==================================================
+
         
         self.lblLabel = Label(RightFrame1, font=('arial', 9,'bold'), padx=6, pady=10, text="Customer No\tFirstname\t Surname \t Contact No \t Address \t Room Num \tCheck In Date \t Check Out Date \tStatus")
         self.lblLabel.grid(row=0, column=0, columnspan=17)
@@ -369,23 +290,18 @@ class Resort:
         lstReso.grid(row=0, column=0, padx=7, sticky= 'nsew')
         scrollbar.config(command = lstReso.xview)
 
-#=======================================RIGHT WIDGETS==================================================
+
         
         self.lblDays = Label(RightFrame3, font=('arial', 12,'bold'), text="No. of Days:", padx=2, pady=2)
         self.lblDays.grid(row=0, column=0, sticky =W)
         self.txtDays =Entry(RightFrame3, font=('arial',12,'bold') ,width =76, textvariable= NoOfDays)
         self.txtDays.grid(row=0, column=1, pady=3, padx=20)
 
-        # self.lblAvRoom = Label(RightFrame3, font=('arial', 12,'bold'), text="Rooms Available:", padx=2, pady=2)
-        # self.lblAvRoom.grid(row=1, column=0, sticky =W)
-        # self.txtAvRoom =Entry(RightFrame3, font=('arial',12,'bold') ,width =76, textvariable= AvailableRoom)
-        # self.txtAvRoom.grid(row=1, column=1, pady=3, padx=20)
 
-#=======================================WIDGET BUTTONS==================================================
+
         #change addData to checkData revise it later
         self.btnTotalandAddData = Button(BottomFrame, bd=4, font=('arial', 16,'bold'),
         width=13, height=2, text='Add', command=addData).grid(row=0, column=0, padx =4,  pady=1)
-        #<====0
 
         self.btnDisplay = Button(BottomFrame, bd=4, font=('arial', 16,'bold'),
         width=13, height=2, text='Display', command= display).grid(row=0, column=1, padx =4,  pady=1)
