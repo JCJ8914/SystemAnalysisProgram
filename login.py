@@ -1,25 +1,37 @@
 from cgitb import text
 import os
+import sqlite3
 from tkinter import *
 from tkinter import messagebox
 import tkinter
+import ttkthemes
+from ttkthemes import ThemedStyle
 import project
+from tkinter import ttk
+
+
+root = Tk()
+root.title("Login to Baculin InfoLog")
+root.geometry("200x150+0+0")
 
 def verification():
+    con = sqlite3.connect("resort_client.db")
+    cur = con.cursor()
+
     user = username.get()
     passcode = password.get()
 
     if(user == "" and passcode == "") :
-        messagebox.showinfo("Baculin InfoLog", "Blank entries are prohibited.")
+        messagebox.showinfo("", "Blank entries are not allowed.")
 
-    elif(user == "admin" and passcode == "admin"):
+    elif(username.get() == "admin" and password.get() == "adminpassword"):
 
-        messagebox.showinfo("Baculin InfoLog","Login successful.")
+        messagebox.showinfo("","Login successful.")
         os.system("project.py 1")
         root.destroy()
-        
+
     else :
-        messagebox.showwarning("Baculin InfoLog","Incorrect credentials, please try again.")
+        messagebox.showwarning("","Incorrect credentials, please try again.")
 
 def exit():
     exitfunction = tkinter.messagebox.askyesno("Login to Baculin InfoLog", "Are you sure you want to exit?")
@@ -27,30 +39,29 @@ def exit():
         root.destroy()
         return
 
-
-root = Tk()
-root.title("Login to Baculin InfoLog")
-root.geometry("350x150+0+0")
+root.style = ThemedStyle()
+root.style.set_theme("arc")
 
 username = StringVar()
 password = StringVar()
 
-root.lblUsername = Label(font=('arial', 12, 'bold'), text="Username:", padx=1)
-root.lblUsername.grid(row=0, column=0, sticky =W)
-root.txtUsername =Entry(root, font=('arial',12) ,width =18, textvariable=username)
-root.txtUsername.grid(row=0, column=1)
+root.programtitle = ttk.Label( text="Baculin InfoLog")
+root.programtitle.grid(row=0, column=0, sticky =W)
 
-root.lblPassword = Label(font=('arial', 12, 'bold'), text="Password:", padx=1)
-root.lblPassword.grid(row=1, column=0, sticky =W)
-root.txtPassword =Entry(root, font=('arial',12) ,width =18, textvariable=password)
-root.txtPassword.grid(row=1, column=1)
+root.lblUsername = ttk.Label(text="Username:")
+root.lblUsername.grid(row=2, column=0, sticky =W)
+root.txtUsername =ttk.Entry(root, font=('arial',12) ,width =14, textvariable=username)
+root.txtUsername.grid(row=2, column=1)
+
+root.lblPassword = ttk.Label(text="Password:")
+root.lblPassword.grid(row=3, column=0, sticky =W)
+root.txtPassword =ttk.Entry(root, font=('arial',12) ,width =14, textvariable=password)
+root.txtPassword.grid(row=3, column=1)
 root.txtPassword.config(show="*")
 
 
-root.btnLogin = Button(bd=2, font=('arial', 16, 'bold'),
-width=10, height=2, text='Login', command=verification).grid(row=5, column=0)
+root.btnLogin = ttk.Button(text='Login', command=verification).grid(row=5, column=0)
 
-root.btnExit = Button(bd=2, font=('arial', 16, 'bold'),
-width=10, height=2, text='Exit', command=exit).grid(row=5, column=1)
+root.btnExit = ttk.Button(text='Exit', command=exit).grid(row=5, column=1)
 
 root.mainloop()
