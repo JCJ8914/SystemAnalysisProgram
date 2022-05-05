@@ -50,7 +50,7 @@ class Resort:
         Contact = StringVar()
         CusAddress = StringVar()
         Room = StringVar()
-        Status = StringVar() 
+        Status = StringVar() #Added Status
 
         NoOfDays = StringVar()
         AvailableRoom = StringVar()
@@ -66,7 +66,7 @@ class Resort:
         randomReference = str(rand)
         CusID.set(randomReference)
 
-
+#==================================Button Functions============================================================
         
         def iExit():
             iExit = tkinter.messagebox.askyesno("InfoLog", "Confirm if you want to exit.")
@@ -91,7 +91,7 @@ class Resort:
                 rand = random.randint(1190, 8000)
                 randomReference = str(rand)
                 CusID.set(randomReference)
-        
+        #added the Names and Room number on database
         def add():
             if(len(CusID.get()) != 0):
                 backend.addData(CusID.get(), FirstName.get(), Lastname.get(), Contact.get(), CusAddress.get(), Room.get(), DateIn.get(), DateOut.get(), Status.get())
@@ -155,7 +155,7 @@ class Resort:
                 #returns empty list or not
                 rows=backend.getDataFromDatabase(CusID, FirstName, Lastname, Contact, CusAddress, Room, DateIn, DateOut, Status)
 
-                
+                #added here
                 if rows =='RedudantCustomerNo':
                         messagebox.showerror("Error", "Redundant Customer No.")
                         Reset()
@@ -164,7 +164,8 @@ class Resort:
                         messagebox.showerror("Error", "Room Already Taken. Please Try Again")
                         Reset()
                         return True
-                
+                #if same name but different CustomerID, not allowed
+                #CustomerName can renew his/her cusID if he/she already check-out then check-in again in other date
                 
                 elif rows==[]:
                         print("empty list")
@@ -172,9 +173,7 @@ class Resort:
                         return False
                 else:
                         print("Walang nangyari sadlyf")
-                        return True
-
-                
+                        return True       
 
         def addData():
 
@@ -193,9 +192,8 @@ class Resort:
 
                 #if there is redudant data    
                 if checkIfRedudantData==True:
-                        # messagebox.showerror("Error", "Redudant Data")
-                        print('Try Agai')
-                        # Reset()
+                        messagebox.showerror("Error", "Redudant Data")
+                        print('Try Again')
                         return 
                         
                 # if no redudant data from the checkData function, runs code below
@@ -226,6 +224,7 @@ class Resort:
                                 return
 
 
+# #=======================================LEFT WIDGETS==================================================
 
         self.lblCusID = Label(LeftFrame, font=('arial', 18,'bold'), text="Baculin InfoLog", padx=1)
         self.lblCusID.grid(row=0, column=0, sticky =W)
@@ -278,7 +277,7 @@ class Resort:
         self.ddmStatus ['value'] = ('Check-in', 'Check-Out')
         self.ddmStatus.current(0)
         self.ddmStatus.grid(row=10, column=1, pady=3, padx=20)
-
+#=======================================RIGHT WIDGETS==================================================
         
         self.lblLabel = Label(RightFrame1, font=('arial', 9,'bold'), padx=6, pady=10, text="Customer No\tFirstname\t Surname \t Contact No \t Address \t Room Num \tCheck In Date \t Check Out Date \tStatus")
         self.lblLabel.grid(row=0, column=0, columnspan=17)
@@ -290,18 +289,18 @@ class Resort:
         lstReso.grid(row=0, column=0, padx=7, sticky= 'nsew')
         scrollbar.config(command = lstReso.xview)
 
-
+#=======================================RIGHT WIDGETS==================================================
         
         self.lblDays = Label(RightFrame3, font=('arial', 12,'bold'), text="No. of Days:", padx=2, pady=2)
         self.lblDays.grid(row=0, column=0, sticky =W)
         self.txtDays =Entry(RightFrame3, font=('arial',12,'bold') ,width =76, textvariable= NoOfDays)
         self.txtDays.grid(row=0, column=1, pady=3, padx=20)
 
+#=======================================WIDGET BUTTONS==================================================
 
-
-        #change addData to checkData revise it later
         self.btnTotalandAddData = Button(BottomFrame, bd=4, font=('arial', 16,'bold'),
         width=13, height=2, text='Add', command=addData).grid(row=0, column=0, padx =4,  pady=1)
+        #<====0
 
         self.btnDisplay = Button(BottomFrame, bd=4, font=('arial', 16,'bold'),
         width=13, height=2, text='Display', command= display).grid(row=0, column=1, padx =4,  pady=1)
