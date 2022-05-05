@@ -11,13 +11,16 @@ import random
 from numpy import pad
 import backend
 from tkinter import messagebox
-
+import ttkthemes
 
 class Resort:
     def __init__(self,root):
         self.root = root 
         self.root.title("Baculin InfoLog")
         self.root.geometry("1350x490+0+0")
+
+        self.root.style = ttkthemes.ThemedStyle()
+        self.root.style.set_theme("arc")
 
         MainFrame = Frame(root)
         MainFrame.grid()
